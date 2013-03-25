@@ -57,6 +57,13 @@ export PATH=/usr/local/share/python:$PATH
 export PATH="/usr/local/heroku/bin:$PATH"
 export PATH=$PATH:$HOME/.rvm/bin
 
+# AWS
+export AWS_AUTO_SCALING_HOME=$HOME/Develop/aws/AutoScaling
+export AWS_AUTO_SCALING_URL=https://autoscaling.us-west-2.amazonaws.com
+export AWS_CREDENTIAL_FILE=$HOME/Develop/aws/AutoScaling/credential-file-path
+export PATH=$PATH:$AWS_AUTO_SCALING_HOME/bin
+
+
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" # Load RVM function
 
 [[ -s "$HOME/.nvm/nvm.sh" ]] && . "$HOME/.nvm/nvm.sh" # Load NVM function

@@ -37,25 +37,43 @@ plugins=(ant brew bwana cp encode64 heroku git mvn osx sublime urltools)
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
+export PATH=$PATH:$HOME/Dropbox/Scripts/shell
 
-export GOROOT=$HOME/Develop/go
-export GOBIN=$GOROOT/bin
-export GRADLE_HOME=$HOME/Develop/java/build/gradle
+# Homebrew
+export PATH=/usr/local/bin:$PATH
+
+# JAVA
 export JAVA_HOME=`/usr/libexec/java_home`
-export WIRESHARK_APP_DIR=/Applications/Wireshark.app
 export CHECK_STYLE_HOME=$HOME/Develop/java/build/checkstyle-4.3
 export COVERAGE_HOME=$HOME/Develop/java/build/cobertura-1.9
 export JUNIT_HOME=/usr/share/junit
 export ANT_HOME=/usr/share/ant
+export GRADLE_HOME=$HOME/Develop/java/build/gradle
 
-export PATH=$PATH:$HOME/Dropbox/Scripts/shell
+# GO
+export GOROOT=$HOME/Develop/go
+export GOBIN=$GOROOT/bin
 export PATH=$PATH:$GOBIN:$GRADLE_HOME/bin
-export PATH=$PATH:/opt/wireshark/bin
-export PATH=$PATH:/opt/local/bin:/opt/local/sbin
-export PATH=/usr/local/bin:$PATH
-export PATH=/usr/local/share/python:$PATH
-export PATH="/usr/local/heroku/bin:$PATH"
+
+# Ruby
 export PATH=$PATH:$HOME/.rvm/bin
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" # Load RVM function
+
+# NodeJS
+[[ -s "$HOME/.nvm/nvm.sh" ]] && . "$HOME/.nvm/nvm.sh" # Load NVM function
+
+# PYTHON
+export PATH=$HOME/Develop/python/python3/bin:$PATH
+export VIRTUALENV_DISTRIBUTE=true
+export VIRTUAL_ENV_DISABLE_PROMPT=true
+source $HOME/Develop/python/PyEnv/bin/activate
+
+# Heroku
+export PATH="/usr/local/heroku/bin:$PATH"
+
+# Wireshark
+export WIRESHARK_APP_DIR=/Applications/Wireshark.app
+export PATH=$PATH:/opt/wireshark/bin
 
 # AWS
 export AWS_AUTO_SCALING_HOME=$HOME/Develop/aws/AutoScaling
@@ -64,6 +82,5 @@ export AWS_CREDENTIAL_FILE=$HOME/Develop/aws/AutoScaling/credential-file-path
 export PATH=$PATH:$AWS_AUTO_SCALING_HOME/bin
 
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" # Load RVM function
 
-[[ -s "$HOME/.nvm/nvm.sh" ]] && . "$HOME/.nvm/nvm.sh" # Load NVM function
+

@@ -31,7 +31,7 @@ rrestore() {
 }
 
 rbackup() {
-  if [[ $# ==2 1 ]]; then
+  if [[ $# ==2 ]]; then
     rsync -avz --progress -e ssh . $1:$2
   else
     echo "Usage: rbak host path"

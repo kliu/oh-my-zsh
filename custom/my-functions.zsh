@@ -1,3 +1,4 @@
+
 alias d1="export JPDA=123"
 alias d0="export JPDA="
 alias f="open -a Finder ./"
@@ -15,6 +16,27 @@ alias pc="pwd | pbcopy"
 alias sz="du -sh"
 alias ungit="find . -name '.git' -exec rm -rf {} \;"
 
+e () {
+  [[ -a "$1" ]] || touch $1
+  open -b com.sublimetext.2 "$@"
+  #"/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl" "$@"
+}
+
+rrestore() {
+  if [[ $# == 2 ]]; then
+    rsync -avz --progress -e ssh $1:$2 .
+  else
+    echo "Usage: rbak host path"
+  fi
+}
+
+rbackup() {
+  if [[ $# ==2 1 ]]; then
+    rsync -avz --progress -e ssh . $1:$2
+  else
+    echo "Usage: rbak host path"
+  fi
+}
 
 console () {
   if [[ $# > 0 ]]; then
@@ -89,4 +111,10 @@ call () {
 # `zipup ~/Desktop/gitarchive.zip`
 function zipup() {
   git archive --format zip --output $1 master
+}
+
+safekey () {
+  chmod 700 ~/.ssh
+  chmod 600 ~/.ssh/*
+  chmod 400 ~/.ssh/*.pem
 }

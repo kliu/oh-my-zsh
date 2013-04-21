@@ -1,7 +1,7 @@
-echo "Removing ~/.oh-my-zsh"
-if [[ -d ~/.oh-my-zsh ]]
+echo "Removing $ZSH"
+if [[ -d $ZSH ]]
 then
-  rm -rf ~/.oh-my-zsh
+  rm -rf $ZSH
 fi
 
 echo "Looking for original zsh config..."

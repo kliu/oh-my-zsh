@@ -15,6 +15,7 @@ alias o="open -a"
 alias pc="pwd | pbcopy"
 alias sz="du -sh"
 alias ungit="find . -name '.git' -exec rm -rf {} \;"
+alias scp="scp -v -p -r -C"
 
 e () {
   [[ -a "$1" ]] || touch $1

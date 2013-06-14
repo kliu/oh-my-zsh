@@ -91,7 +91,7 @@ mantxt () { #open man page in TextMate
 
 # instant web server for current dir
 function serve() {
-  python -m SimpleHTTPServer ${1:-8080}
+  python3 -m http.server
 }
 
 call () {

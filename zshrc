@@ -35,6 +35,10 @@ source $ZSH/oh-my-zsh.sh
 # Customize to your needs...
 export PATH=$PATH:$HOME/.dotfiles/script
 
+# Default Editor
+
+export EDITOR='subl -w'
+
 # Homebrew
 export PATH=/usr/local/bin:$PATH
 

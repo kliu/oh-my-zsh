@@ -63,10 +63,11 @@ export PATH=$PATH:$HOME/.rvm/bin
 [[ -s "$HOME/.nvm/nvm.sh" ]] && . "$HOME/.nvm/nvm.sh" # Load NVM function
 
 # PYTHON
+export PYTHON_ENV=$HOME/Develop/python/PyEnv
 export PATH=$HOME/Develop/python/python3/bin:$PATH
 export VIRTUALENV_DISTRIBUTE=true
 export VIRTUAL_ENV_DISABLE_PROMPT=true
-source $HOME/Develop/python/PyEnv/bin/activate
+source $PYTHON_ENV/bin/activate
 
 # Heroku
 export PATH="/usr/local/heroku/bin:$PATH"
@@ -80,6 +81,7 @@ export AWS_AUTO_SCALING_HOME=$HOME/Develop/aws/AutoScaling
 export AWS_AUTO_SCALING_URL=https://autoscaling.us-west-2.amazonaws.com
 export AWS_CREDENTIAL_FILE=$HOME/Develop/aws/AutoScaling/credential-file-path
 export PATH=$PATH:$AWS_AUTO_SCALING_HOME/bin
+source $PYTHON_ENV/bin/aws_zsh_completer.sh
 
 
 

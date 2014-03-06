@@ -19,7 +19,7 @@ alias scp="scp -v -p -r -C"
 
 e () {
   [[ -a "$1" ]] || touch $1
-  open -b com.sublimetext.2 "$@"
+  subl "$@"
   #"/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl" "$@"
 }
 

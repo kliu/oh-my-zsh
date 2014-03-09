@@ -3,7 +3,7 @@ alias d1="export JPDA=123"
 alias d0="export JPDA="
 alias f="open -a Finder ./"
 alias fname="find . -name"
-alias grep="grep -R --color=auto -i -H -n"
+alias grep="grep --color=auto -i -H -n"
 alias ip="curl icanhazip.com"
 alias ls="ls -GlFh"
 alias lt='echo "------Newest--" && ls -At1 -GlFh && echo "------Oldest--"'
@@ -118,4 +118,27 @@ safekey () {
   chmod 700 ~/.ssh
   chmod 600 ~/.ssh/*
   chmod 400 ~/.ssh/*.pem
+}
+
+jekyll_deploy() {
+  jekyll build
+  if [ -d ".git" ] ; then
+    git add --all .
+    git commit -m "Update site"
+    git push origin source
+    cd _site
+    git add --all .
+    git commit -m "Update site"
+    git push origin master
+    cd ..
+  else
+    rsync -rlptDvz --delete --progress --exclude '_site' . root@helloworld.me:/mnt/data/develop/kliu.helloworld.me
+    rsync -rlptDvz --delete --progress _site/  root@helloworld.me:/mnt/data/docs
+  fi
+}
+
+jekyll_newpost() {
+  touch _posts/$1.md
+  mkdir downloads/$1
+  Open ~/Documents/write.sublime-project
 }

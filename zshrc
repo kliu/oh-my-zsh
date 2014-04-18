@@ -32,6 +32,10 @@ plugins=(ant brew bwana cp encode64 heroku git mvn osx sublime urltools safe-pas
 
 source $ZSH/oh-my-zsh.sh
 
+# Encodeing
+export LC_CTYPE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
 # Customize to your needs...
 export PATH=$PATH:$HOME/.dotfiles/script
 
@@ -49,11 +53,13 @@ export COVERAGE_HOME=$HOME/Develop/java/build/cobertura-1.9
 export JUNIT_HOME=/usr/share/junit
 export ANT_HOME=/usr/share/ant
 export GRADLE_HOME=$HOME/Develop/java/build/gradle
+export MAVEN_HOME=$HOME/Develop/java/build/maven
+export PATH=$PATH:$MAVEN_HOME/bin:$GRADLE_HOME/bin
 
 # GO
 export GOROOT=$HOME/Develop/go
 export GOBIN=$GOROOT/bin
-export PATH=$PATH:$GOBIN:$GRADLE_HOME/bin
+export PATH=$PATH:$GOBIN
 
 # Ruby
 export PATH=$PATH:$HOME/.rvm/bin

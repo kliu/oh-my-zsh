@@ -89,6 +89,9 @@ export AWS_CREDENTIAL_FILE=$HOME/Develop/aws/AutoScaling/credential-file-path
 export PATH=$PATH:$AWS_AUTO_SCALING_HOME/bin
 source $PYTHON_ENV/bin/aws_zsh_completer.sh
 
+# Google Cloud SDK
+source /Users/kt/Develop/tools/google-cloud-sdk/path.zsh.inc
+source /Users/kt/Develop/tools/google-cloud-sdk/completion.zsh.inc
 
 
 

@@ -16,6 +16,7 @@ alias pc="pwd | pbcopy"
 alias sz="du -sh"
 alias ungit="find . -name '.git' -exec rm -rf {} \;"
 alias scp="scp -v -p -r -C"
+alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pasteboard.'"
 
 e () {
   [[ -a "$1" ]] || touch $1
@@ -140,5 +141,4 @@ jekyll_deploy() {
 jekyll_newpost() {
   touch _posts/$1.md
   mkdir downloads/$1
-  Open ~/Documents/write.sublime-project
 }

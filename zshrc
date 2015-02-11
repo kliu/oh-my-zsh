@@ -57,9 +57,9 @@ export MAVEN_HOME=$HOME/Develop/java/build/maven
 export PATH=$PATH:$MAVEN_HOME/bin:$GRADLE_HOME/bin
 
 # GO
-export GOROOT=$HOME/Develop/go
-export GOBIN=$GOROOT/bin
-export PATH=$PATH:$GOBIN
+#export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+[[ -s "/Users/kt/.gvm/scripts/gvm" ]] && source "/Users/kt/.gvm/scripts/gvm"
+export GOPATH=$HOME/Work/Go:$GOPATH
 
 # Ruby
 export PATH=$PATH:$HOME/.rvm/bin
@@ -67,6 +67,10 @@ export PATH=$PATH:$HOME/.rvm/bin
 
 # NodeJS
 [[ -s "$HOME/.nvm/nvm.sh" ]] && . "$HOME/.nvm/nvm.sh" # Load NVM function
+
+# Rust
+export RUST_SRC_PATH=$HOME/Develop/rust/rust-nightly/src
+export PATH=$PATH:$HOME/Develop/rust/racer/bin
 
 # PYTHON
 export PYTHON_ENV=$HOME/Develop/python/PyEnv
@@ -92,6 +96,4 @@ source $PYTHON_ENV/bin/aws_zsh_completer.sh
 # Google Cloud SDK
 source /Users/kt/Develop/tools/google-cloud-sdk/path.zsh.inc
 source /Users/kt/Develop/tools/google-cloud-sdk/completion.zsh.inc
-
-
 

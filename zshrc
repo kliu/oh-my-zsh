@@ -14,7 +14,12 @@ ZSH=$HOME/.dotfiles/oh-my-zsh
 # Look in $ZSH
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="minimal"
+
+if [[ $OS_TYPE == 'osx' ]]; then
+	ZSH_THEME="minimal"
+elif [[ $OS_TYPE == 'linux' ]]; then
+	ZSH_THEME="minimal-hostname"
+fi
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
@@ -61,10 +66,12 @@ fi
 export PATH=/usr/local/bin:$PATH
 
 # JAVA
+# wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/7u75-b13/jdk-7u75-linux-x64.tar.gz
 if [[ $OS_TYPE == 'osx' ]]; then
 	export JAVA_HOME=`/usr/libexec/java_home`
 elif [[ $OS_TYPE == 'linux' ]]; then
 	export JAVA_HOME=$HOME/Develop/java/jdk
+	export PATH=$JAVA_HOME/bin:$PATH
 fi
 
 export CHECK_STYLE_HOME=$HOME/Develop/java/build/checkstyle-4.3

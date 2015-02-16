@@ -5,9 +5,15 @@ alias f="open -a Finder ./"
 alias fname="find . -name"
 alias grep="grep --color=auto -i -H -n"
 alias ip="curl icanhazip.com"
-alias ls="ls -GlFh"
-alias lt='echo "------Newest--" && ls -At1 -GlFh && echo "------Oldest--"'
-alias ltr='echo "------Oldest--" && ls -Art1 -GlFh && echo "------Newest--"'
+if [[ $OS_TYPE == 'osx' ]]; then
+	alias ls="ls -GlFh"
+	alias lt='echo "------Newest--" && ls -At1 -GlFh && echo "------Oldest--"'
+	alias ltr='echo "------Oldest--" && ls -Art1 -GlFh && echo "------Newest--"'
+elif [[ $OS_TYPE == 'linux' ]]; then
+	alias ls="ls -lFh --color=auto"
+	alias lt='echo "------Newest--" && ls -At1 -lFh --color=auto && echo "------Oldest--"'
+	alias ltr='echo "------Oldest--" && ls -Art1 -lFh --color=auto && echo "------Newest--"'
+fi
 alias mkdir='mkdir -p -v'
 alias mvn-debug="export MAVEN_OPTS='-Xdebug -Xrunjdwp:transport=dt_socket,address=8000,suspend=y,server=y'"
 alias mvn-debugoff="export MAVEN_OPTS="

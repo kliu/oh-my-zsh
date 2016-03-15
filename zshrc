@@ -43,7 +43,7 @@ DISABLE_AUTO_UPDATE="true"
 # Custom plugins may be added to $ZSH/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 if [[ $OS_TYPE == 'osx' ]]; then
-	plugins=(ant brew bwana cp encode64 heroku git mvn osx sublime urltools safe-paste)
+	plugins=(ant brew bwana cp encode64 heroku git mvn osx sublime urltools safe-paste zsh-autosuggestions)
 elif [[ $OS_TYPE == 'linux' ]]; then
 	plugins=(ant cp encode64 git mvn urltools safe-paste)
 fi

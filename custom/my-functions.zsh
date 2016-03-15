@@ -27,6 +27,8 @@ function setjdk() {
     export JAVA_HOME=`/usr/libexec/java_home -v $@`
 }
 
+alias lsjava='/usr/libexec/java_home -V 2>&1 | grep ", " | cut -d , -f 1 | cut -d : -f 3 | tr -d " "'
+
 # System  =================================
 alias f="open -a Finder ./"
 alias o="open -a"

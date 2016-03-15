@@ -73,9 +73,9 @@ if [[ $OS_TYPE == 'osx' ]]; then
 	export JAVA_HOME=`/usr/libexec/java_home`
 elif [[ $OS_TYPE == 'linux' ]]; then
 	export JAVA_HOME=$HOME/Develop/java/jdk
-	export PATH=$JAVA_HOME/bin:$PATH
 fi
 
+export PATH=$JAVA_HOME/bin:$PATH
 export CHECK_STYLE_HOME=$HOME/Develop/java/build/checkstyle-4.3
 export COVERAGE_HOME=$HOME/Develop/java/build/cobertura-1.9
 export JUNIT_HOME=/usr/share/junit

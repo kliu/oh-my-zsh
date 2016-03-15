@@ -48,7 +48,7 @@ elif [[ $OS_TYPE == 'linux' ]]; then
 	plugins=(ant cp encode64 git mvn urltools safe-paste)
 fi
 
-export SOCKS_SERVER=127.0.0.1:1080
+#export SOCKS_SERVER=127.0.0.1:1080
 
 source $ZSH/oh-my-zsh.sh
 

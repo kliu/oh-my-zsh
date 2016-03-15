@@ -16,7 +16,7 @@ ZSH=$HOME/.dotfiles/oh-my-zsh
 # time that oh-my-zsh is loaded.
 
 if [[ $OS_TYPE == 'osx' ]]; then
-	ZSH_THEME="minimal"
+	ZSH_THEME="minimal-custom"
 elif [[ $OS_TYPE == 'linux' ]]; then
 	ZSH_THEME="minimal-hostname"
 fi

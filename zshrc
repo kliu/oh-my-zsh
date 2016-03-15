@@ -45,8 +45,10 @@ DISABLE_AUTO_UPDATE="true"
 if [[ $OS_TYPE == 'osx' ]]; then
 	plugins=(ant brew bwana cp encode64 heroku git mvn osx sublime urltools safe-paste)
 elif [[ $OS_TYPE == 'linux' ]]; then
-	plugins=(ant brew cp encode64 heroku git mvn urltools safe-paste)
+	plugins=(ant cp encode64 git mvn urltools safe-paste)
 fi
+
+export SOCKS_SERVER=127.0.0.1:1080
 
 source $ZSH/oh-my-zsh.sh
 
@@ -126,3 +128,9 @@ export PATH=$PATH:$AWS_AUTO_SCALING_HOME/bin
 [[ -s "$HOME/Develop/tools/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/Develop/tools/google-cloud-sdk/path.zsh.inc"
 [[ -s "$HOME/Develop/tools/google-cloud-sdk/completion.zsh.inc" ]] && source "$HOME/Develop/tools/google-cloud-sdk/completion.zsh.inc"
 
+echo "=============== Quote Of The Day ==============="
+echo
+fortune
+echo
+echo "================================================"
+echo

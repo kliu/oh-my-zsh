@@ -61,7 +61,7 @@ export PATH=$PATH:$HOME/.dotfiles/script
 
 # Default Editor
 if [[ $OS_TYPE == 'osx' ]]; then
-	export EDITOR='subl -w' 	
+	export EDITOR='subl -w'
 fi
 
 # Homebrew
@@ -95,6 +95,13 @@ export PATH=$PATH:$HOME/.rvm/bin
 
 # NodeJS
 [[ -s "$HOME/.nvm/nvm.sh" ]] && . "$HOME/.nvm/nvm.sh" # Load NVM function
+autoload -U add-zsh-hook
+load-nvmrc() {
+  if [[ -f .nvmrc && -r .nvmrc ]]; then
+    nvm use
+  fi
+}
+add-zsh-hook chpwd load-nvmrc
 
 # Rust
 export RUST_SRC_PATH=$HOME/Develop/rust/rust-nightly/src
@@ -106,6 +113,9 @@ export PATH=$HOME/Develop/python/python3/bin:$PATH
 export VIRTUALENV_DISTRIBUTE=true
 export VIRTUAL_ENV_DISABLE_PROMPT=true
 [[ -s "$PYTHON_ENV/bin/activate" ]] && source "$PYTHON_ENV/bin/activate"
+
+# Postgres
+export PATH=/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH
 
 # Heroku
 ### Added by the Heroku Toolbelt
@@ -127,6 +137,9 @@ export PATH=$PATH:$AWS_AUTO_SCALING_HOME/bin
 # Google Cloud SDK
 [[ -s "$HOME/Develop/tools/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/Develop/tools/google-cloud-sdk/path.zsh.inc"
 [[ -s "$HOME/Develop/tools/google-cloud-sdk/completion.zsh.inc" ]] && source "$HOME/Develop/tools/google-cloud-sdk/completion.zsh.inc"
+
+# Blog
+export BLOG_HOME=$HOME/Documents/Blogs/lzy.d01.cz
 
 echo "=============== Quote Of The Day ==============="
 echo

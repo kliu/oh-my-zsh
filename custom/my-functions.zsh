@@ -179,3 +179,36 @@ jekyll_newpost() {
   touch _posts/$1.md
   mkdir downloads/$1
 }
+
+hexo_draft() {
+  cd $BLOG_HOME
+  POST=$(hexo new draft $1 | tail -n1 | sed 's/INFO  Created: //g')
+  cd -
+  subl $POST
+}
+
+hexo_pub() {
+  cd $BLOG_HOME
+  POST=$(hexo publish $1 | tail -n1 | sed 's/INFO  Created: //g')
+  cd -
+  subl $POST
+}
+
+hexo_new() {
+  cd $BLOG_HOME
+  POST=$(hexo new post $1 | tail -n1 | sed 's/INFO  Created: //g')
+  cd -
+  subl $POST
+}
+
+hexo_preview() {
+  open http://127.0.0.1:4000  
+  hexo --cwd $BLOG_HOME server
+}
+
+hexo_deploy() {
+  cd $BLOG_HOME
+  hexo clean
+  hexo generate -d
+  cd -
+}

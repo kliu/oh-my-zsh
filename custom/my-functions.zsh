@@ -8,6 +8,7 @@ alias d0="export JPDA="
 alias mvn-debug="export MAVEN_OPTS='-Xdebug -Xrunjdwp:transport=dt_socket,address=8000,suspend=y,server=y'"
 alias mvn-debugoff="export MAVEN_OPTS="
 alias ungit="find . -name '.git' -exec rm -rf {} \;"
+alias gitc='git -c user.name="zhiyuliu" -c user.email="zhiyuliu@cisco.com"'
 
 e () {
   [[ -a "$1" ]] || touch $1
@@ -179,3 +180,15 @@ jekyll_newpost() {
   touch _posts/$1.md
   mkdir downloads/$1
 }
+
+pfd() {
+  osascript 2>/dev/null -e '
+    tell application "Finder"
+      return POSIX path of (target of window 1 as alias)
+    end tell'
+}
+
+cdf() {
+  cd "$(pfd)"
+}
+

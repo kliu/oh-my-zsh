@@ -67,6 +67,9 @@ fi
 # Homebrew
 export PATH=/usr/local/bin:$PATH
 
+# PSQL
+export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
+
 # JAVA
 # wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/7u75-b13/jdk-7u75-linux-x64.tar.gz
 if [[ $OS_TYPE == 'osx' ]]; then
@@ -86,8 +89,9 @@ export PATH=$PATH:$MAVEN_HOME/bin:$GRADLE_HOME/bin
 
 # GO
 #export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
-[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
-export GOPATH=$HOME/Work/Go:$GOPATH
+# [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
+# export GOPATH=$HOME/Work/Go:$GOPATH
+export GOPATH=/Users/zhiyuliu/go
 
 # Ruby
 export PATH=$PATH:$HOME/.rvm/bin
@@ -104,22 +108,22 @@ load-nvmrc() {
 add-zsh-hook chpwd load-nvmrc
 
 # Rust
-export RUST_SRC_PATH=$HOME/Develop/rust/rust-nightly/src
-export PATH=$PATH:$HOME/Develop/rust/racer/bin
+# export RUST_SRC_PATH=$HOME/Develop/rust/rust-nightly/src
+# export PATH=$PATH:$HOME/Develop/rust/racer/bin
 
 # PYTHON
-export PYTHON_ENV=$HOME/Develop/python/PyEnv
-export PATH=$HOME/Develop/python/python3/bin:$PATH
-export VIRTUALENV_DISTRIBUTE=true
-export VIRTUAL_ENV_DISABLE_PROMPT=true
-[[ -s "$PYTHON_ENV/bin/activate" ]] && source "$PYTHON_ENV/bin/activate"
+# export PYTHON_ENV=$HOME/Develop/python/PyEnv
+# export PATH=$HOME/Develop/python/python3/bin:$PATH
+# export VIRTUALENV_DISTRIBUTE=true
+# export VIRTUAL_ENV_DISABLE_PROMPT=true
+# [[ -s "$PYTHON_ENV/bin/activate" ]] && source "$PYTHON_ENV/bin/activate"
 
 # Postgres
 export PATH=/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH
 
 # Heroku
 ### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
+# export PATH="/usr/local/heroku/bin:$PATH"
 
 # Wireshark
 if [[ $OS_TYPE == 'osx' ]]; then
@@ -128,22 +132,19 @@ if [[ $OS_TYPE == 'osx' ]]; then
 fi
 
 # AWS
-export AWS_AUTO_SCALING_HOME=$HOME/Develop/aws/AutoScaling
-export AWS_AUTO_SCALING_URL=https://autoscaling.us-west-2.amazonaws.com
-export AWS_CREDENTIAL_FILE=$HOME/Develop/aws/AutoScaling/credential-file-path
-export PATH=$PATH:$AWS_AUTO_SCALING_HOME/bin
-[[ -s "$PYTHON_ENV/bin/aws_zsh_completer.sh" ]] && source "$PYTHON_ENV/bin/aws_zsh_completer.sh"
+# export AWS_AUTO_SCALING_HOME=$HOME/Develop/aws/AutoScaling
+# export AWS_AUTO_SCALING_URL=https://autoscaling.us-west-2.amazonaws.com
+# export AWS_CREDENTIAL_FILE=$HOME/Develop/aws/AutoScaling/credential-file-path
+# export PATH=$PATH:$AWS_AUTO_SCALING_HOME/bin
+# [[ -s "$PYTHON_ENV/bin/aws_zsh_completer.sh" ]] && source "$PYTHON_ENV/bin/aws_zsh_completer.sh"
 
 # Google Cloud SDK
-[[ -s "$HOME/Develop/tools/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/Develop/tools/google-cloud-sdk/path.zsh.inc"
-[[ -s "$HOME/Develop/tools/google-cloud-sdk/completion.zsh.inc" ]] && source "$HOME/Develop/tools/google-cloud-sdk/completion.zsh.inc"
+# [[ -s "$HOME/Develop/tools/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/Develop/tools/google-cloud-sdk/path.zsh.inc"
+# [[ -s "$HOME/Develop/tools/google-cloud-sdk/completion.zsh.inc" ]] && source "$HOME/Develop/tools/google-cloud-sdk/completion.zsh.inc"
 
-# Blog
-export BLOG_HOME=$HOME/Documents/Blogs/lzy.d01.cz
-
-echo "=============== Quote Of The Day ==============="
-echo
-fortune
-echo
-echo "================================================"
-echo
+# echo "=============== Quote Of The Day ==============="
+# echo
+# fortune
+# echo
+# echo "================================================"
+# echo

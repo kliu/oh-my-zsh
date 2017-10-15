@@ -142,6 +142,9 @@ fi
 # [[ -s "$HOME/Develop/tools/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/Develop/tools/google-cloud-sdk/path.zsh.inc"
 # [[ -s "$HOME/Develop/tools/google-cloud-sdk/completion.zsh.inc" ]] && source "$HOME/Develop/tools/google-cloud-sdk/completion.zsh.inc"
 
+# ZSH Autosuggestion
+source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
 # echo "=============== Quote Of The Day ==============="
 # echo
 # fortune

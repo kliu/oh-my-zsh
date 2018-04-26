@@ -142,6 +142,9 @@ fi
 # [[ -s "$HOME/Develop/tools/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/Develop/tools/google-cloud-sdk/path.zsh.inc"
 # [[ -s "$HOME/Develop/tools/google-cloud-sdk/completion.zsh.inc" ]] && source "$HOME/Develop/tools/google-cloud-sdk/completion.zsh.inc"
 
+# Android
+export PATH=$PATH:$HOME/Library/Android/sdk/platform-tools
+
 # ZSH Autosuggestion
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
@@ -151,3 +154,7 @@ source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 # echo
 # echo "================================================"
 # echo
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/Users/kt/.sdkman"
+[[ -s "/Users/kt/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/kt/.sdkman/bin/sdkman-init.sh"

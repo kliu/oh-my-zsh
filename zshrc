@@ -124,6 +124,9 @@ export PATH=/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH
 # Heroku
 ### Added by the Heroku Toolbelt
 # export PATH="/usr/local/heroku/bin:$PATH"
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+fi
 
 # Wireshark
 if [[ $OS_TYPE == 'osx' ]]; then
@@ -158,3 +161,6 @@ source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/Users/kt/.sdkman"
 [[ -s "/Users/kt/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/kt/.sdkman/bin/sdkman-init.sh"
+
+#Local
+source ~/.local_env

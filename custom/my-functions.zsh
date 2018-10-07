@@ -124,6 +124,7 @@ alias cget='curl -O'
 alias cgets='curls -O'
 alias sshs="ssh -o 'ProxyCommand=nc -X 5 -x 127.0.0.1:1080 %h %p' -o 'ServerAliveInterval=10'"
 alias proxy='proxychains4'
+alias aria='aria2c -c -x16 -s20 -j20'
 
 rrestore() {
   if [[ $# == 2 ]]; then
@@ -223,4 +224,12 @@ pfd() {
 
 cdf() {
   cd "$(pfd)"
+}
+
+marked() {
+  if [ $1 ]; then
+    open -a "Marked" $1;
+  else
+    open -a "Marked";
+  fi
 }

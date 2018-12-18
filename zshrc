@@ -57,7 +57,7 @@ export LC_CTYPE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
 # Customize to your needs...
-export PATH=$PATH:$HOME/.dotfiles/script
+export PATH=$HOME/.dotfiles/script:$PATH
 
 # Default Editor
 if [[ $OS_TYPE == 'osx' ]]; then
@@ -67,31 +67,25 @@ fi
 # Homebrew
 export PATH=/usr/local/bin:$PATH
 
-# PSQL
+# PSQL & Postgres
 export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
 
 # JAVA
 # wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/7u75-b13/jdk-7u75-linux-x64.tar.gz
 if [[ $OS_TYPE == 'osx' ]]; then
-	export JAVA_HOME=`/usr/libexec/java_home`
+	# export JAVA_HOME=`/usr/libexec/java_home`
+    export JAVA_HOME=$HOME/.sdkman/candidates/java/current
 elif [[ $OS_TYPE == 'linux' ]]; then
 	export JAVA_HOME=$HOME/Develop/java/jdk
 fi
 
 export PATH=$JAVA_HOME/bin:$PATH
-export CHECK_STYLE_HOME=$HOME/Develop/java/build/checkstyle-4.3
-export COVERAGE_HOME=$HOME/Develop/java/build/cobertura-1.9
-export JUNIT_HOME=/usr/share/junit
-export ANT_HOME=/usr/share/ant
-export GRADLE_HOME=$HOME/Develop/java/build/gradle
-export MAVEN_HOME=$HOME/Develop/java/build/maven
-export PATH=$PATH:$MAVEN_HOME/bin:$GRADLE_HOME/bin
 
 # GO
 #export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 # [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 # export GOPATH=$HOME/Work/Go:$GOPATH
-export GOPATH=/Users/zhiyuliu/go
+# export GOPATH=/Users/zhiyuliu/go
 
 # Ruby
 export PATH=$PATH:$HOME/.rvm/bin
@@ -117,9 +111,7 @@ add-zsh-hook chpwd load-nvmrc
 # export VIRTUALENV_DISTRIBUTE=true
 # export VIRTUAL_ENV_DISABLE_PROMPT=true
 # [[ -s "$PYTHON_ENV/bin/activate" ]] && source "$PYTHON_ENV/bin/activate"
-
-# Postgres
-export PATH=/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH
+# export PATH=/usr/local/opt/python/libexec/bin:$PATH
 
 # Heroku
 ### Added by the Heroku Toolbelt
@@ -146,10 +138,10 @@ fi
 # [[ -s "$HOME/Develop/tools/google-cloud-sdk/completion.zsh.inc" ]] && source "$HOME/Develop/tools/google-cloud-sdk/completion.zsh.inc"
 
 # Android
-export PATH=$PATH:$HOME/Library/Android/sdk/platform-tools
+export PATH=$HOME/Library/Android/sdk/platform-tools:$PATH
 
 # ZSH Autosuggestion
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+# source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # echo "=============== Quote Of The Day ==============="
 # echo
@@ -159,8 +151,8 @@ source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 # echo
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/Users/kt/.sdkman"
-[[ -s "/Users/kt/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/kt/.sdkman/bin/sdkman-init.sh"
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 #Local
 source ~/.local_env

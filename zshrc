@@ -6,6 +6,7 @@ elif [[ "$unamestr" == 'Darwin' ]]; then
    OS_TYPE='osx'
 fi
 export OS_TYPE
+export TERM="xterm-256color"
 
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.dotfiles/oh-my-zsh
@@ -16,10 +17,24 @@ ZSH=$HOME/.dotfiles/oh-my-zsh
 # time that oh-my-zsh is loaded.
 
 if [[ $OS_TYPE == 'osx' ]]; then
-	ZSH_THEME="minimal-custom"
+	ZSH_THEME="bullet-train"
 elif [[ $OS_TYPE == 'linux' ]]; then
 	ZSH_THEME="minimal-hostname"
 fi
+
+# Theme
+BULLETTRAIN_EXEC_TIME_ELAPSED=0
+BULLETTRAIN_TIME_BG=red
+BULLETTRAIN_TIME_FG=white
+BULLETTRAIN_GIT_BG=cyan
+BULLETTRAIN_PROMPT_ORDER=(
+	time
+	status
+	dir
+    virtualenv
+    git
+    cmd_exec_time
+)
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
@@ -140,8 +155,6 @@ fi
 # Android
 export PATH=$HOME/Library/Android/sdk/platform-tools:$PATH
 
-# ZSH Autosuggestion
-# source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # echo "=============== Quote Of The Day ==============="
 # echo

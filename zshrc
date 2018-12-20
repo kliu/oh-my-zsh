@@ -58,10 +58,12 @@ DISABLE_AUTO_UPDATE="true"
 # Custom plugins may be added to $ZSH/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 if [[ $OS_TYPE == 'osx' ]]; then
-	plugins=(ant brew bwana cp encode64 heroku git mvn osx sublime urltools safe-paste zsh-autosuggestions)
+	plugins=(ant brew bwana cp encode64 heroku git mvn osx sublime urltools safe-paste zsh-autosuggestions zsh-completions zsh-syntax-highlighting history-substring-search)
 elif [[ $OS_TYPE == 'linux' ]]; then
 	plugins=(ant cp encode64 git mvn urltools safe-paste)
 fi
+
+autoload -U compinit && compinit
 
 #export SOCKS_SERVER=127.0.0.1:1080
 
@@ -169,3 +171,6 @@ export SDKMAN_DIR="$HOME/.sdkman"
 
 #Local
 source ~/.local_env
+
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down

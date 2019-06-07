@@ -12,7 +12,8 @@ alias gitc='git -c user.name="zhiyuliu" -c user.email="zhiyuliu@cisco.com"'
 
 e () {
   [[ -a "$1" ]] || touch $1
-  subl "$@"
+  code "$@"
+  # subl "$@"
   #"/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl" "$@"
 }
 

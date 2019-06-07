@@ -57,14 +57,7 @@ DISABLE_AUTO_UPDATE="true"
 # Which plugins would you like to load? (plugins can be found in $ZSH/plugins/*)
 # Custom plugins may be added to $ZSH/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-if [[ $OS_TYPE == 'osx' ]]; then
-	plugins=(ant brew bwana cp encode64 heroku git mvn osx sublime urltools safe-paste zsh-autosuggestions zsh-completions zsh-syntax-highlighting history-substring-search)
-elif [[ $OS_TYPE == 'linux' ]]; then
-	plugins=(ant cp encode64 git mvn urltools safe-paste)
-fi
-
-autoload -U compinit && compinit
-
+plugins=(ant autojump brew bwana cp encode64 heroku git mvn osx sublime urltools rsync safe-paste zsh-autosuggestions zsh-syntax-highlighting history-substring-search zsh-completions)
 #export SOCKS_SERVER=127.0.0.1:1080
 
 source $ZSH/oh-my-zsh.sh
@@ -99,10 +92,13 @@ fi
 export PATH=$JAVA_HOME/bin:$PATH
 
 # GO
-#export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
-# [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
-# export GOPATH=$HOME/Work/Go:$GOPATH
-# export GOPATH=/Users/zhiyuliu/go
+export GOPATH="${HOME}/.go"
+export GOROOT="$(brew --prefix golang)/libexec"
+export GOBIN="${GOPATH}/bin"
+export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin:${GOBIN}"
+test -d "${GOPATH}" || mkdir "${GOPATH}"
+test -d "${GOBIN}" || mkdir "${GOBIN}"
+test -d "${GOPATH}/src/github.com" || mkdir -p "${GOPATH}/src/github.com"
 
 # Ruby
 export PATH=$PATH:$HOME/.rvm/bin
@@ -136,6 +132,8 @@ add-zsh-hook chpwd load-nvmrc
 if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
 fi
+# heroku autocomplete setup
+HEROKU_AC_ZSH_SETUP_PATH=/Users/zhiyuliu/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
 
 # Wireshark
 if [[ $OS_TYPE == 'osx' ]]; then
@@ -174,3 +172,13 @@ source ~/.local_env
 
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
+
+autoload -U compinit && compinit
+
+echo
+echo "=============== Poem Of The Day ==============="
+echo
+fortune -e songci-fortunes
+echo
+echo "================================================"
+echo

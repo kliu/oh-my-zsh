@@ -31,6 +31,61 @@ function setjdk() {
 
 alias lsjava='/usr/libexec/java_home -V 2>&1 | grep ", " | cut -d , -f 1 | cut -d : -f 3 | tr -d " "'
 
+# Sync =================================
+
+function push() {
+    local POSITIONAL=()
+    while [[ $# -gt 0 ]]
+    do
+    local key="$1"
+
+    case $key in
+        -d|--device)
+        local DEVICE="$2"
+        shift # past argument
+        shift # past value
+        ;;
+        -m|--message)
+        local MESSAGE="$2"
+        shift # past argument
+        shift # past value
+        ;;
+        -f|--file)
+        local ATTACHMENT="$2"
+        shift # past argument
+        shift # past value
+        ;;
+        # --default)
+        # DEFAULT=YES
+        # shift # past argument
+        # ;;
+        *)    # unknown option
+        POSITIONAL+=("$1") # save it in an array for later
+        shift # past argument
+        ;;
+    esac
+    done
+    set -- "${POSITIONAL[@]}" # restore positional parameters
+
+    command="curl -s --form-string \"token=${PUSHOVER_TOKEN}\" --form-string \"user=${PUSHOVER_USERKEY}\"  --form-string \"message=${MESSAGE}\""
+
+    if [ -z ${DEVICE+x} ]; then 
+        echo "Message will be pushed to all devices";
+    else 
+        command+=" --form-string \"device=${DEVICE}\"";
+    fi
+
+    if [ -z ${ATTACHMENT+x} ]; then 
+        ; 
+    else 
+        command+=" -F \"attachment=@${ATTACHMENT}\"";
+    fi
+
+    command+=" https://api.pushover.net/1/messages.json"
+  
+    eval $command
+}
+
 # System  =================================
 alias f="open -a Finder ./"
 alias o="open -a"
@@ -233,4 +288,11 @@ marked() {
   else
     open -a "Marked";
   fi
+}
+
+function kotlinr() {
+  echo Compiling, please wait...
+  kotlinc $1 -include-runtime -d $TMPDIR\me.helloworld.kotlinr-out.jar
+  echo Compiled. ---------------
+  java -jar $TMPDIR\me.helloworld.kotlinr-out.jar
 }

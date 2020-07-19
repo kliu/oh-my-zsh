@@ -57,28 +57,46 @@ DISABLE_AUTO_UPDATE="true"
 # Which plugins would you like to load? (plugins can be found in $ZSH/plugins/*)
 # Custom plugins may be added to $ZSH/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(ant autojump brew bwana cp encode64 heroku git mvn osx sublime urltools rsync safe-paste zsh-autosuggestions zsh-syntax-highlighting history-substring-search zsh-completions)
+plugins=(ant autojump brew bwana cp encode64 heroku git mvn osx sublime urltools rsync safe-paste zsh-autosuggestions zsh-syntax-highlighting zsh-peco-history zsh-completions)
 #export SOCKS_SERVER=127.0.0.1:1080
 
+source $HOME/.ssh/secret_store.sh
 source $ZSH/oh-my-zsh.sh
 
 # Encodeing
 export LC_CTYPE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
+# History
+HISTSIZE=10000000
+SAVEHIST=10000000
+setopt BANG_HIST                 # Treat the '!' character specially during expansion.
+setopt EXTENDED_HISTORY          # Write the history file in the ":start:elapsed;command" format.
+setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
+setopt SHARE_HISTORY             # Share history between all sessions.
+setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
+setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again.
+setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a duplicate.
+setopt HIST_FIND_NO_DUPS         # Do not display a line previously found.
+setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
+setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history file.
+setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
+setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
+setopt HIST_BEEP
+
 # Customize to your needs...
 export PATH=$HOME/.dotfiles/script:$PATH
 
 # Default Editor
 if [[ $OS_TYPE == 'osx' ]]; then
-	export EDITOR='subl -w'
+	export EDITOR='code'
 fi
 
 # Homebrew
 export PATH=/usr/local/bin:$PATH
 
 # PSQL & Postgres
-export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
+# export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
 
 # JAVA
 # wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/7u75-b13/jdk-7u75-linux-x64.tar.gz
@@ -92,13 +110,13 @@ fi
 export PATH=$JAVA_HOME/bin:$PATH
 
 # GO
-export GOPATH="${HOME}/.go"
-export GOROOT="$(brew --prefix golang)/libexec"
-export GOBIN="${GOPATH}/bin"
-export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin:${GOBIN}"
-test -d "${GOPATH}" || mkdir "${GOPATH}"
-test -d "${GOBIN}" || mkdir "${GOBIN}"
-test -d "${GOPATH}/src/github.com" || mkdir -p "${GOPATH}/src/github.com"
+# export GOPATH="${HOME}/.go"
+# export GOROOT="$(brew --prefix golang)/libexec"
+# export GOBIN="${GOPATH}/bin"
+# export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin:${GOBIN}"
+# test -d "${GOPATH}" || mkdir "${GOPATH}"
+# test -d "${GOBIN}" || mkdir "${GOBIN}"
+# test -d "${GOPATH}/src/github.com" || mkdir -p "${GOPATH}/src/github.com"
 
 # Ruby
 export PATH=$PATH:$HOME/.rvm/bin
@@ -132,8 +150,6 @@ add-zsh-hook chpwd load-nvmrc
 if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
 fi
-# heroku autocomplete setup
-HEROKU_AC_ZSH_SETUP_PATH=/Users/zhiyuliu/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
 
 # Wireshark
 if [[ $OS_TYPE == 'osx' ]]; then
@@ -155,6 +171,8 @@ fi
 # Android
 export PATH=$HOME/Library/Android/sdk/platform-tools:$PATH
 
+# Fastline
+export PATH="$HOME/.fastlane/bin:$PATH"
 
 # echo "=============== Quote Of The Day ==============="
 # echo
@@ -170,8 +188,12 @@ export SDKMAN_DIR="$HOME/.sdkman"
 #Local
 source ~/.local_env
 
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
+# history-substring-search-up
+# bindkey '^[[A' history-substring-search-up
+# bindkey '^[[B' history-substring-search-down
+
+# zsh-peco-history
+
 
 autoload -U compinit && compinit
 

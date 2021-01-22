@@ -180,7 +180,8 @@ alias cget='curl -O'
 alias cgets='curls -O'
 alias sshs="ssh -o 'ProxyCommand=nc -X 5 -x 127.0.0.1:1080 %h %p' -o 'ServerAliveInterval=10'"
 alias proxy='proxychains4'
-alias aria='aria2c -c -x16 -s20 -j20'
+alias aria='aria2c --conf-path="/Users/lzy/.dotfiles/aria2/aria2.conf" -D'
+alias ariaui='open /Users/lzy/.dotfiles/aria2/webui-aria2/docs/index.html'
 
 rrestore() {
   if [[ $# == 2 ]]; then
@@ -290,9 +291,14 @@ marked() {
   fi
 }
 
-function kotlinr() {
+function kr() {
   echo Compiling, please wait...
   kotlinc $1 -include-runtime -d $TMPDIR\me.helloworld.kotlinr-out.jar
   echo Compiled. ---------------
+  echo "\n"
   java -jar $TMPDIR\me.helloworld.kotlinr-out.jar
+}
+
+function ks() {
+  kotlinc -script $1
 }

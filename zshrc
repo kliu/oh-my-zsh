@@ -103,6 +103,7 @@ export PATH=/usr/local/bin:$PATH
 if [[ $OS_TYPE == 'osx' ]]; then
 	# export JAVA_HOME=`/usr/libexec/java_home`
     export JAVA_HOME=$HOME/.sdkman/candidates/java/current
+    export JDK_HOME=$HOME/.sdkman/candidates/java/current
 elif [[ $OS_TYPE == 'linux' ]]; then
 	export JAVA_HOME=$HOME/Develop/java/jdk
 fi
@@ -133,6 +134,9 @@ load-nvmrc() {
 add-zsh-hook chpwd load-nvmrc
 
 # Rust
+export RUSTUP_HOME=$HOME/.rustup
+export CARGO_HOME=$HOME/.cargo
+source $HOME/.cargo/env
 # export RUST_SRC_PATH=$HOME/Develop/rust/rust-nightly/src
 # export PATH=$PATH:$HOME/Develop/rust/racer/bin
 

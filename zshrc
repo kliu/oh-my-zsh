@@ -63,7 +63,7 @@ DISABLE_AUTO_UPDATE="true"
 # Which plugins would you like to load? (plugins can be found in $ZSH/plugins/*)
 # Custom plugins may be added to $ZSH/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(ant autojump brew cp encode64 heroku git mvn osx sublime urltools rsync safe-paste zsh-autosuggestions zsh-syntax-highlighting zsh-peco-history zsh-completions)
+plugins=(ant autojump brew command-not-found cp encode64 heroku git mvn osx sublime urltools rsync safe-paste zsh-autosuggestions zsh-syntax-highlighting zsh-peco-history zsh-completions)
 #export SOCKS_SERVER=127.0.0.1:1080
 
 source $HOME/.ssh/secret_store.sh

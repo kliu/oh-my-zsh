@@ -34,12 +34,21 @@ function git_zip() {
 }
 
 function git_commit_search() {
-  git grep $1 $(git rev-list --all -- $2) -- $2
+  git log -S $1
 }
 
 function git_commit_diff() {
   git difftool $1^! 
 }
+
+function git_branch_delete() {
+  git branch -D $1
+  git push origin :$1
+}
+
+# Utils ===================================
+alias cli="java -jar ~/.m2/repository/me/helloworld/cli/1.0-SNAPSHOT/cli-1.0-SNAPSHOT-jar-with-dependencies.jar"
+source ~/.dotfiles/script/cli_completion
 
 # System  =================================
 alias f="open -a Finder ./"
@@ -83,6 +92,14 @@ file_extract () { #unarchive various compression formats based on extension
         else
                 echo "'$1' is not a valid file"
         fi
+}
+
+file_extracts() {
+  for f in *.tar.gz; do 
+    d=`basename "$f" .tar.gz`
+    mkdir "$d"
+    (cd "$d" && tar xf "../$f")
+  done
 }
 
 md5check() { md5sum "$1" | grep "$2";}

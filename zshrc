@@ -18,6 +18,7 @@ ZSH=$HOME/.dotfiles/oh-my-zsh
 
 if [[ $OS_TYPE == 'osx' ]]; then
 	ZSH_THEME="bullet-train"
+  # ZSH_THEME="spaceship"
 elif [[ $OS_TYPE == 'linux' ]]; then
 	ZSH_THEME="minimal-hostname"
 fi
@@ -28,13 +29,18 @@ BULLETTRAIN_TIME_BG=red
 BULLETTRAIN_TIME_FG=white
 BULLETTRAIN_GIT_BG=cyan
 BULLETTRAIN_PROMPT_ORDER=(
-	time
-	status
-	dir
-    virtualenv
-    git
-    cmd_exec_time
+  time
+  status
+  dir
+  virtualenv
+  git
+  cmd_exec_time
 )
+
+SPACESHIP_TIME_SHOW=true
+SPACESHIP_DIR_TRUNC_REPO=false
+SPACESHIP_DIR_TRUNC_PREFIX=...
+SPACESHIP_EXIT_CODE_SHOW=true
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
@@ -178,19 +184,19 @@ export PATH=$HOME/Library/Android/sdk/platform-tools:$PATH
 # Fastline
 export PATH="$HOME/.fastlane/bin:$PATH"
 
-# echo "=============== Quote Of The Day ==============="
-# echo
-# fortune
-# echo
-# echo "================================================"
-# echo
-
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
+# Elasticsearch
+export ES_HOME="$HOME/Work/BBSC/sandbox/elasticsearch-7.14.0"
+
 #Local
 source ~/.local_env
+
+# FZF
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export PATH=$HOME/.app/git-fuzzy/bin/:$PATH
 
 # history-substring-search-up
 # bindkey '^[[A' history-substring-search-up

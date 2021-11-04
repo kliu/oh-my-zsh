@@ -10,6 +10,10 @@ e () {
   #"/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl" "$@"
 }
 
+function es {
+  code $(bs)
+}
+
 man_pdf () { #display man page as a PostScript PDF in Preview.app
   man -t "$1"|open -f -a "Preview.app"
 }
@@ -59,8 +63,17 @@ alias file_find="find . -name"
 alias file_path="pwd | pbcopy"
 alias file_size="du -sh"
 alias ls="ls -GlFh"
-alias lt='echo "------Newest--" && ls -At1 -GlFh && echo "------Oldest--"'
-alias ltr='echo "------Oldest--" && ls -Art1 -GlFh && echo "------Newest--"'
+alias lst='echo "------Newest--" && ls -At1 -GlFh && echo "------Oldest--"'
+alias lstr='echo "------Oldest--" && ls -Art1 -GlFh && echo "------Newest--"'
+alias bs="br --conf ~/.dotfiles/broot/select.toml"
+
+function tree {
+    br -c :pt "$@"
+}
+
+function dcd {
+    br --only-folders --cmd "$1;:cd"
+}
 
 pfd() {
   osascript 2>/dev/null -e '

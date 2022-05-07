@@ -1,8 +1,3 @@
-
-#### FIG ENV VARIABLES ####
-# Please make sure this block is at the start of this file.
-[ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
-#### END FIG ENV VARIABLES ####
 OS_TYPE='unknown'
 unamestr=`uname`
 if [[ "$unamestr" == 'Linux' ]]; then
@@ -21,31 +16,31 @@ ZSH=$HOME/.dotfiles/oh-my-zsh
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 
-if [[ $OS_TYPE == 'osx' ]]; then
-	ZSH_THEME="bullet-train"
-  # ZSH_THEME="spaceship"
-elif [[ $OS_TYPE == 'linux' ]]; then
-	ZSH_THEME="minimal-hostname"
-fi
+# if [[ $OS_TYPE == 'osx' ]]; then
+# 	ZSH_THEME="bullet-train"
+#   # ZSH_THEME="spaceship"
+# elif [[ $OS_TYPE == 'linux' ]]; then
+# 	ZSH_THEME="minimal-hostname"
+# fi
 
 # Theme
-BULLETTRAIN_EXEC_TIME_ELAPSED=0
-BULLETTRAIN_TIME_BG=red
-BULLETTRAIN_TIME_FG=white
-BULLETTRAIN_GIT_BG=cyan
-BULLETTRAIN_PROMPT_ORDER=(
-  time
-  status
-  dir
-  virtualenv
-  git
-  cmd_exec_time
-)
+# BULLETTRAIN_EXEC_TIME_ELAPSED=0
+# BULLETTRAIN_TIME_BG=red
+# BULLETTRAIN_TIME_FG=white
+# BULLETTRAIN_GIT_BG=cyan
+# BULLETTRAIN_PROMPT_ORDER=(
+#   time
+#   status
+#   dir
+#   virtualenv
+#   git
+#   cmd_exec_time
+# )
 
-SPACESHIP_TIME_SHOW=true
-SPACESHIP_DIR_TRUNC_REPO=false
-SPACESHIP_DIR_TRUNC_PREFIX=...
-SPACESHIP_EXIT_CODE_SHOW=true
+# SPACESHIP_TIME_SHOW=true
+# SPACESHIP_DIR_TRUNC_REPO=false
+# SPACESHIP_DIR_TRUNC_PREFIX=...
+# SPACESHIP_EXIT_CODE_SHOW=true
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
@@ -68,7 +63,7 @@ DISABLE_AUTO_UPDATE="true"
 # Which plugins would you like to load? (plugins can be found in $ZSH/plugins/*)
 # Custom plugins may be added to $ZSH/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(ant autojump brew command-not-found cp encode64 heroku git mvn macos sublime urltools rsync safe-paste zsh-autosuggestions zsh-syntax-highlighting zsh-peco-history zsh-completions)
+plugins=(ant autojump brew command-not-found cp encode64 git mvn macos urltools rsync safe-paste zsh-autosuggestions zsh-syntax-highlighting zsh-completions)
 #export SOCKS_SERVER=127.0.0.1:1080
 
 source $HOME/.ssh/secret_store.sh
@@ -210,7 +205,7 @@ export PATH=$HOME/.app/git-fuzzy/bin/:$PATH
 # zsh-peco-history
 
 # Broot
-source /Users/lzy/.config/broot/launcher/bash/br
+source $HOME/.config/broot/launcher/bash/br
 
 # less
 if [[ -x /usr/local/bin/lesspipe.sh ]]; then
@@ -220,6 +215,11 @@ fi
 
 autoload -U compinit && compinit
 
+# Starship
+## brew install startship
+export STARSHIP_CONFIG=$HOME/.dotfiles/starship/starship.toml
+eval "$(starship init zsh)"
+
 echo
 echo "=============== Poem Of The Day ==============="
 echo
@@ -227,8 +227,3 @@ fortune -e songci-fortunes
 echo
 echo "================================================"
 echo
-
-#### FIG ENV VARIABLES ####
-# Please make sure this block is at the end of this file.
-[ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
-#### END FIG ENV VARIABLES ####

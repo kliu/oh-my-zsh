@@ -10,7 +10,12 @@ e () {
   #"/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl" "$@"
 }
 
-function es {
+fe() {
+  IFS=$'\n' files=($(fd . $1 --type f --exclude ".git" | fzf --multi -i --exit-0))
+  [[ -n "$files" ]] && ${EDITOR:-code} "${files[@]}"
+}
+
+be() {
   code $(bs)
 }
 
@@ -37,6 +42,16 @@ function git_zip() {
   git archive --format zip --output $1 master
 }
 
+function git_branch_delete() {
+  git branch -D $1
+  git push origin :$1
+}
+
+
+alias glNoGraph='git log --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr% C(auto)%an" "$@"'
+_gitLogLineToHash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1"
+_viewGitLogLine="$_gitLogLineToHash | xargs -I % sh -c 'git show --color=always % | diff-so-fancy'"
+
 function git_commit_search() {
   git log -S $1
 }
@@ -45,9 +60,52 @@ function git_commit_diff() {
   git difftool $1^! 
 }
 
-function git_branch_delete() {
-  git branch -D $1
-  git push origin :$1
+function git_commit_show() {
+  git log --graph --color=always \
+      --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
+  fzf --ansi --no-sort --reverse --tiebreak=index \
+      --header "enter to view, alt-y to copy hash" \
+      --bind=ctrl-s:toggle-sort \
+      --bind "alt-y:execute:$_gitLogLineToHash | pbcopy" \
+      --bind "enter:execute:$_viewGitLogLine   | less -R" \
+      --bind "ctrl-m:execute:
+                (grep -o '[a-f0-9]\{7\}' | head -1 |
+                xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
+                {}
+FZF-EOF"
+}
+
+function git_commit_show_preview() {
+    glNoGraph |
+        fzf --no-sort --reverse --tiebreak=index --no-multi \
+            --ansi --preview="$_viewGitLogLine" \
+                --header "enter to view, alt-y to copy hash" \
+                --bind "enter:execute:$_viewGitLogLine   | less -R" \
+                --bind "alt-y:execute:$_gitLogLineToHash | pbcopy"
+}
+
+function git_stash_show() {
+  local out q k sha
+  while out=$(
+    git stash list --pretty="%C(yellow)%h %>(14)%Cgreen%cr %C(blue)%gs" |
+    fzf --ansi --no-sort --query="$q" --print-query \
+        --expect=ctrl-d,ctrl-b);
+  do
+    mapfile -t out <<< "$out"
+    q="${out[0]}"
+    k="${out[1]}"
+    sha="${out[-1]}"
+    sha="${sha%% *}"
+    [[ -z "$sha" ]] && continue
+    if [[ "$k" == 'ctrl-d' ]]; then
+      git diff $sha
+    elif [[ "$k" == 'ctrl-b' ]]; then
+      git stash branch "stash-$sha" $sha
+      break;
+    else
+      git stash show -p $sha
+    fi
+  done
 }
 
 # Utils ===================================
@@ -67,12 +125,37 @@ alias lst='echo "------Newest--" && ls -At1 -GlFh && echo "------Oldest--"'
 alias lstr='echo "------Oldest--" && ls -Art1 -GlFh && echo "------Newest--"'
 alias bs="br --conf ~/.dotfiles/broot/select.toml"
 
-function tree {
-    br -c :pt "$@"
+function cd() {
+    if [[ "$#" != 0 ]]; then
+        builtin cd "$@";
+        return
+    fi
+    while true; do
+        local lsd=$(echo ".." && \ls -p | \grep '/$' | sed 's;/$;;')
+        local dir="$(printf '%s\n' "${lsd[@]}" |
+            fzf --ansi -i --reverse --preview '
+                __cd_nxt="$(echo {})";
+                __cd_path="$(echo $(pwd)/${__cd_nxt} | sed "s;//;/;")";
+                echo $__cd_path;
+                echo;
+                ls -p --color=always "${__cd_path}";
+        ')"
+        [[ ${#dir} != 0 ]] || return 0
+        builtin cd "$dir" &> /dev/null
+    done
 }
 
-function dcd {
-    br --only-folders --cmd "$1;:cd"
+fcd() {
+  dir=($(fd . $1 --type d --exclude ".git" | fzf -i --exit-0))
+  [[ -n "$dir" ]] && cd "$dir"
+}
+
+fhist() {
+  print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed -E 's/ *[0-9]*\*? *//' | sed -E 's/\\/\\\\/g')
+}
+
+function tree {
+    br -c :pt "$@"
 }
 
 pfd() {

@@ -1,40 +1,140 @@
-
-# Funny =================================
-alias busy="cat /dev/urandom | hexdump -C | grep 'ca fe'"
-
-# Editor =================================
-e () {
-  [[ -a "$1" ]] || touch $1
-  code "$@"
-  # subl "$@"
-  #"/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl" "$@"
+function func() { ###
+  print -z $( cli sh -f "/Users/$(whoami)/.dotfiles/oh-my-zsh/custom/my-functions.zsh" | fzf +s --tac | sed -E 's/ *[0-9]*\*? *//' | sed -E 's/\\/\\\\/g' )
 }
 
-fe() {
+# Funny =================================
+function busy() {
+  cat /dev/urandom | hexdump -C | grep 'ca fe'
+}
+
+# System  =================================
+alias f="open -a Finder ./"
+alias o="open -a"
+alias mkdir='mkdir -p -v'
+alias grep="grep --color=auto -i -H -n"
+alias ls="ls -GlFh"
+alias lst='echo "------Newest--" && ls -At1 -GlFh && echo "------Oldest--"'
+alias lstr='echo "------Oldest--" && ls -Art1 -GlFh && echo "------Newest--"'
+alias bs="br --conf ~/.dotfiles/broot/select.toml"
+
+# Utils =================================
+function e() { ###
+  [[ -a "$1" ]] || touch $1
+  code "$@"
+}
+
+function ef() {
   IFS=$'\n' files=($(fd . $1 --type f --exclude ".git" | fzf --multi -i --exit-0))
   [[ -n "$files" ]] && ${EDITOR:-code} "${files[@]}"
 }
 
-be() {
+function eb() {
   code $(bs)
 }
 
-man_pdf () { #display man page as a PostScript PDF in Preview.app
+function man_pdf() {
   man -t "$1"|open -f -a "Preview.app"
 }
 
-man_txt () { #open man page in TextMate
-  MANWIDTH=160 MANPAGER='col -bx' man $@ | e
+function man_txt() {
+  MANWIDTH=160 MANPAGER='col -bx' man $@ | code -
+}
+
+function hist() {
+  print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed -E 's/ *[0-9]*\*? *//' | sed -E 's/\\/\\\\/g')
+}
+
+function cli() { ###
+  java -jar ~/.m2/repository/me/helloworld/cli/1.0-SNAPSHOT/cli-1.0-SNAPSHOT-jar-with-dependencies.jar "$@"
+}
+source ~/.dotfiles/script/cli_completion
+
+# Files & Dirs ===================================
+function file_path() {
+  pwd | pbcopy
+}
+
+function file_size() {
+  du -sh "$@"
+}
+
+function file_extract () { #unarchive various compression formats based on extension
+        if [ -f $1 ] ; then
+                case $1 in
+                        *.tar.bz2)          tar xjf $1       ;;
+                        *.tar.gz)           tar xzf $1       ;;
+                        *.bz2)              bunzip2 $1       ;;
+                        *.rar)              rar x $1         ;;
+                        *.gz)               gunzip $1        ;;
+                        *.tar)              tar xf $1        ;;
+                        *.tbz2)             tar xjf $1       ;;
+                        *.tgz)              tar xzf $1       ;;
+                        *.zip)              unzip $1         ;;
+                        *.Z)                uncompress $1    ;;
+                        *.dmg)              hdiutil mount $1 ;;
+                        *)                  echo "'$1' cannot be extracted via extract()" ;;
+                esac
+        else
+                echo "'$1' is not a valid file"
+        fi
+}
+
+function file_extracts() {
+  for f in *.tar.gz; do 
+    d=`basename "$f" .tar.gz`
+    mkdir "$d"
+    (cd "$d" && tar xf "../$f")
+  done
+}
+
+function cd() {
+    if [[ "$#" != 0 ]]; then
+        builtin cd "$@";
+        return
+    fi
+    while true; do
+        local lsd=$(echo ".." && \ls -p | \grep '/$' | sed 's;/$;;')
+        local dir="$(printf '%s\n' "${lsd[@]}" |
+            fzf --ansi -i --reverse --preview '
+                __cd_nxt="$(echo {})";
+                __cd_path="$(echo $(pwd)/${__cd_nxt} | sed "s;//;/;")";
+                echo $__cd_path;
+                echo;
+                ls -p --color=always "${__cd_path}";
+        ')"
+        [[ ${#dir} != 0 ]] || return 0
+        builtin cd "$dir" &> /dev/null
+    done
+}
+
+function cdf() {
+  dir=($(fd . $1 --type d --exclude ".git" | fzf -i --exit-0))
+  [[ -n "$dir" ]] && cd "$dir"
+}
+
+function tree() { 
+  br -c :pt "$@" 
+}
+
+function md5check() { 
+  md5sum "$1" | grep "$2";
 }
 
 # Maven  =================================
-alias mvn_debug="export MAVEN_OPTS='-Xdebug -Xrunjdwp:transport=dt_socket,address=8000,suspend=y,server=y'"
-alias mvn_debugoff="export MAVEN_OPTS="
+function mvn_debug() { ###
+  export MAVEN_OPTS='-Xdebug -Xrunjdwp:transport=dt_socket,address=8000,suspend=y,server=y'
+}
+
+function mvn_debugoff() { ###
+  export MAVEN_OPTS=
+}
 
 # Git =================================
-alias git_ungit="find . -name '.git' -exec rm -rf {} \;"
+function git_ungit() {
+  find . -name '.git' -exec rm -rf {} \;
+}
 
-function git_config_cisco() {
+function git_config_cisco() { ###
   git -c user.name="zhiyuliu" -c user.email="zhiyuliu@cisco.com"
 }
 
@@ -46,7 +146,6 @@ function git_branch_delete() {
   git branch -D $1
   git push origin :$1
 }
-
 
 alias glNoGraph='git log --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr% C(auto)%an" "$@"'
 _gitLogLineToHash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1"
@@ -108,117 +207,50 @@ function git_stash_show() {
   done
 }
 
-# Utils ===================================
-alias cli="java -jar ~/.m2/repository/me/helloworld/cli/1.0-SNAPSHOT/cli-1.0-SNAPSHOT-jar-with-dependencies.jar"
-source ~/.dotfiles/script/cli_completion
-
-# System  =================================
-alias f="open -a Finder ./"
-alias o="open -a"
-alias mkdir='mkdir -p -v'
-alias grep="grep --color=auto -i -H -n"
-alias file_find="find . -name"
-alias file_path="pwd | pbcopy"
-alias file_size="du -sh"
-alias ls="ls -GlFh"
-alias lst='echo "------Newest--" && ls -At1 -GlFh && echo "------Oldest--"'
-alias lstr='echo "------Oldest--" && ls -Art1 -GlFh && echo "------Newest--"'
-alias bs="br --conf ~/.dotfiles/broot/select.toml"
-
-function cd() {
-    if [[ "$#" != 0 ]]; then
-        builtin cd "$@";
-        return
-    fi
-    while true; do
-        local lsd=$(echo ".." && \ls -p | \grep '/$' | sed 's;/$;;')
-        local dir="$(printf '%s\n' "${lsd[@]}" |
-            fzf --ansi -i --reverse --preview '
-                __cd_nxt="$(echo {})";
-                __cd_path="$(echo $(pwd)/${__cd_nxt} | sed "s;//;/;")";
-                echo $__cd_path;
-                echo;
-                ls -p --color=always "${__cd_path}";
-        ')"
-        [[ ${#dir} != 0 ]] || return 0
-        builtin cd "$dir" &> /dev/null
-    done
-}
-
-fcd() {
-  dir=($(fd . $1 --type d --exclude ".git" | fzf -i --exit-0))
-  [[ -n "$dir" ]] && cd "$dir"
-}
-
-fhist() {
-  print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed -E 's/ *[0-9]*\*? *//' | sed -E 's/\\/\\\\/g')
-}
-
-function tree {
-    br -c :pt "$@"
-}
-
-pfd() {
-  osascript 2>/dev/null -e '
-    tell application "Finder"
-      return POSIX path of (target of window 1 as alias)
-    end tell'
-}
-
-file_goto() {
-  cd "$(pfd)"
-}
-
-file_extract () { #unarchive various compression formats based on extension
-        if [ -f $1 ] ; then
-                case $1 in
-                        *.tar.bz2)          tar xjf $1       ;;
-                        *.tar.gz)           tar xzf $1       ;;
-                        *.bz2)              bunzip2 $1       ;;
-                        *.rar)              rar x $1         ;;
-                        *.gz)               gunzip $1        ;;
-                        *.tar)              tar xf $1        ;;
-                        *.tbz2)             tar xjf $1       ;;
-                        *.tgz)              tar xzf $1       ;;
-                        *.zip)              unzip $1         ;;
-                        *.Z)                uncompress $1    ;;
-                        *.dmg)              hdiutil mount $1 ;;
-                        *)                  echo "'$1' cannot be extracted via extract()" ;;
-                esac
-        else
-                echo "'$1' is not a valid file"
-        fi
-}
-
-file_extracts() {
-  for f in *.tar.gz; do 
-    d=`basename "$f" .tar.gz`
-    mkdir "$d"
-    (cd "$d" && tar xf "../$f")
-  done
-}
-
-md5check() { md5sum "$1" | grep "$2";}
-
 # Security =================================
-alias key_pub="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pasteboard.'"
+function key_pub() {
+  cat ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pasteboard.'
+}
 
-key_safe() {
+function key_safe() {
   chmod 700 ~/.ssh
   chmod 600 ~/.ssh/*
   chmod 400 ~/.ssh/*.pem
 }
 
 # Networking =================================
-alias web_get_site="wget --random-wait -r -p -e robots=off -U mozilla"
-alias web_get='curl -O'
-alias list_port="lsof -P -i -n"
-alias list_ip="curl ifconfig.me"
 alias scp="scp -v -p -r -C"
-alias aria='aria2c --conf-path="/Users/lzy/.dotfiles/aria2/aria2.conf" -D'
-alias ariaui='open /Users/lzy/.dotfiles/aria2/webui-aria2/docs/index.html'
 # alias skype2='sudo /Applications/Skype.app/Contents/MacOS/Skype'
 alias skype2='open -na /Applications/Skype.app --args --secondary --datapath="/Users/$(whoami)/Library/Application\ Support/Skype2"'
+
+function list_port() {
+  lsof -P -i -n
+}
+
+function list_ip() {
+  curl ifconfig.me
+}
+
+function download() {
+  if ! pgrep -x "aria2c" > /dev/null
+  then
+    aria2c --conf-path="/Users/$(whoami)/.dotfiles/aria2/aria2.conf" -D
+  fi
+  open "/Users/$(whoami)/.dotfiles/aria2/webui-aria2/docs/index.html"
+}
+
+function web_get() {
+  curl -O "$@"
+}
+
+function web_get_site() {
+  wget --random-wait -r -p -e robots=off -U mozilla "$@"
+}
+
+function web_serve() {
+  # python3 -m http.server
+  caddy file-server --browse
+}
 
 function push() {
     local POSITIONAL=()
@@ -273,38 +305,28 @@ function push() {
     eval $command
 }
 
-function web_serve() {
-  python3 -m http.server
-}
-
 # Blog  =================================
-hexo_draft() {
-  cd $BLOG_HOME
+function blog_draft() {
   POST=$(hexo new draft $1 | tail -n1 | sed 's/INFO  Created: //g')
-  cd -
-  subl $POST
+  e $POST
 }
 
-hexo_pub() {
-  cd $BLOG_HOME
+function blog_pub() {
   POST=$(hexo publish $1 | tail -n1 | sed 's/INFO  Created: //g')
-  cd -
-  subl $POST
+  e $POST
 }
 
-hexo_new() {
-  cd $BLOG_HOME
+function blog_new() {
   POST=$(hexo new post $1 | tail -n1 | sed 's/INFO  Created: //g')
-  cd -
-  subl $POST
+  e $POST
 }
 
-hexo_preview() {
+function hexo_preview() {
   open http://127.0.0.1:4000  
-  hexo --cwd $BLOG_HOME server
+  hexo server
 }
 
-hexo_deploy() {
+function hexo_deploy() {
   cd $BLOG_HOME
   hexo clean
   hexo generate -d

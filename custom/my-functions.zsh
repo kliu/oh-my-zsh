@@ -15,12 +15,13 @@ alias grep="grep --color=auto -i -H -n"
 alias ls="ls -GlFh"
 alias lst='echo "------Newest--" && ls -At1 -GlFh && echo "------Oldest--"'
 alias lstr='echo "------Oldest--" && ls -Art1 -GlFh && echo "------Newest--"'
+alias br="br -sd"
 alias bs="br --conf ~/.dotfiles/broot/select.toml"
 
 # Utils =================================
 function e() { ###
   [[ -a "$1" ]] || touch $1
-  code "$@"
+  cot "$@"
 }
 
 function ef() {
@@ -30,6 +31,15 @@ function ef() {
 
 function eb() {
   code $(bs)
+}
+
+function cf() {
+  IFS=$'\n' files=($(fd . $1 --type f --exclude ".git" | fzf --multi -i --exit-0))
+  [[ -n "$files" ]] && cot "${files[@]}"
+}
+
+function cb() {
+  cot $(bs)
 }
 
 function man_pdf() {

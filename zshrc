@@ -7,6 +7,7 @@ if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
 fi
 export PATH=/usr/local/bin:$PATH
+export PATH=/usr/local/opt/gnu-getopt/bin:$PATH
 
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.dotfiles/oh-my-zsh
@@ -75,7 +76,7 @@ setopt HIST_BEEP
 export PATH=$HOME/.dotfiles/script:$PATH
 
 # Default Editor
-export EDITOR='code'
+export EDITOR='cot'
 
 # PSQL & Postgres
 # export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"

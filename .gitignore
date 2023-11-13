@@ -11,3 +11,4 @@ log/
 
 # editor configs
 .vscode
+.idea

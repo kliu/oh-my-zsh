@@ -217,6 +217,22 @@ function git_stash_show() {
   done
 }
 
+function git_branch_push() {
+    branch_name=$(git branch --show-current)
+    git push origin "$branch_name"
+}
+
+function git_branch_update() {
+    if [ "$#" -eq 0 ]; then
+        repo_name="upstream"
+    else
+        repo_name="$1"
+    fi
+    branch_name=$(git branch --show-current)
+    git fetch "$repo_name" "$branch_name"
+    git rebase "$repo_name"/"$branch_name"
+}
+
 # Security =================================
 function key_pub() {
   cat ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pasteboard.'

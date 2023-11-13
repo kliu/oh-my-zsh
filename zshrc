@@ -3,11 +3,12 @@ export TERM="xterm-256color"
 source $HOME/.local_env
 
 # Homebrew
+eval "$(/opt/homebrew/bin/brew shellenv)"
 if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
 fi
+
 export PATH=/usr/local/bin:$PATH
-export PATH=/usr/local/opt/gnu-getopt/bin:$PATH
 
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.dotfiles/oh-my-zsh
@@ -91,14 +92,9 @@ export PATH=$PATH:$HOME/.rvm/bin
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" # Load RVM function
 
 # NodeJS
-[[ -s "$HOME/.nvm/nvm.sh" ]] && . "$HOME/.nvm/nvm.sh" # Load NVM function
-autoload -U add-zsh-hook
-load-nvmrc() {
-  if [[ -f .nvmrc && -r .nvmrc ]]; then
-    nvm use
-  fi
-}
-add-zsh-hook chpwd load-nvmrc
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # Rust
 export RUSTUP_HOME=$HOME/.rustup
@@ -106,7 +102,9 @@ export CARGO_HOME=$HOME/.cargo
 source $HOME/.cargo/env
 
 # Android
-export PATH=$HOME/Library/Android/sdk/platform-tools:$PATH
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export NDK_HOME=$ANDROID_HOME/ndk-bundle
+export PATH=$ANDROID_HOME/platform-tools:$PATH
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
@@ -117,16 +115,28 @@ export ES_HOME="$HOME/Work/BBSC/sandbox/elasticsearch-7.14.0"
 
 # FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export PATH=$HOME/.app/git-fuzzy/bin/:$PATH
+if [[ ! "$PATH" == */opt/homebrew/opt/fzf/bin* ]]; then
+  PATH="${PATH:+${PATH}:}/opt/homebrew/opt/fzf/bin"
+fi
+[[ $- == *i* ]] && source "/opt/homebrew/opt/fzf/shell/completion.zsh" 2> /dev/null
+source "/opt/homebrew/opt/fzf/shell/key-bindings.zsh"
+export PATH=$HOME/.dotfiles/apps/git-fuzzy/bin/:$PATH
 
 # Broot
 source $HOME/.config/broot/launcher/bash/br
 
-# less
-if [[ -x /usr/local/bin/lesspipe.sh ]]; then
-    export LESSOPEN="|/usr/local/bin/lesspipe.sh %s"
-    export LESS_ADVANCED_PREPROCESSOR=1
-fi
+# Forgit
+export PATH="$PATH:$ZSH/custom/plugins/forgit/bin"
+export FORGIT_FZF_DEFAULT_OPTS="
+--exact
+--border
+--cycle
+--reverse
+--height '80%'
+"
+
+# autojump
+[ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
 
 autoload -U compinit && compinit
 
@@ -136,9 +146,13 @@ export STARSHIP_CONFIG=$HOME/.dotfiles/starship/starship.toml
 eval "$(starship init zsh)"
 
 echo
-echo "=============== Poem Of The Tab ==============="
+echo "=============== Poem of the Tab ==============="
 echo
 fortune -e songci-fortunes
 echo
 echo "================================================"
 echo
+
+source $HOME/.config/broot/launcher/bash/br
+
+[ -f ~/.inshellisense/key-bindings.zsh ] && source ~/.inshellisense/key-bindings.zsh

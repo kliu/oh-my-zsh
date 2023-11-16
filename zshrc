@@ -134,11 +134,16 @@ export FORGIT_FZF_DEFAULT_OPTS="
 --reverse
 --height '80%'
 "
-
 # autojump
 [ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
 
 autoload -U compinit && compinit
+
+# MS Inshellisense
+[ -f ~/.inshellisense/key-bindings.zsh ] && source ~/.inshellisense/key-bindings.zsh
+
+# iTerm2
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # Starship
 ## brew install startship
@@ -152,9 +157,3 @@ fortune -e songci-fortunes
 echo
 echo "================================================"
 echo
-
-source $HOME/.config/broot/launcher/bash/br
-
-[ -f ~/.inshellisense/key-bindings.zsh ] && source ~/.inshellisense/key-bindings.zsh
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-

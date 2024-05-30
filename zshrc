@@ -77,7 +77,7 @@ setopt HIST_BEEP
 export PATH=$HOME/.dotfiles/script:$PATH
 
 # Default Editor
-export EDITOR='cot'
+export EDITOR='code -w'
 
 # PSQL & Postgres
 # export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"

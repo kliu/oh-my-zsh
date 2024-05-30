@@ -21,7 +21,7 @@ alias bs="br --conf ~/.dotfiles/broot/select.toml"
 # Utils =================================
 function e() { ###
   [[ -a "$1" ]] || touch $1
-  cot "$@"
+  code -r "$@"
 }
 
 function ef() {
@@ -90,7 +90,7 @@ function file_extract () { #unarchive various compression formats based on exten
 }
 
 function file_extracts() {
-  for f in *.tar.gz; do 
+  for f in *.tar.gz; do
     d=`basename "$f" .tar.gz`
     mkdir "$d"
     (cd "$d" && tar xf "../$f")
@@ -122,11 +122,11 @@ function cdf() {
   [[ -n "$dir" ]] && cd "$dir"
 }
 
-function tree() { 
-  br -c :pt "$@" 
+function tree() {
+  br --height=65535 -c :pt "$@"
 }
 
-function md5check() { 
+function md5check() {
   md5sum "$1" | grep "$2";
 }
 
@@ -166,7 +166,7 @@ function git_commit_search() {
 }
 
 function git_commit_diff() {
-  git difftool $1^! 
+  git difftool $1^!
 }
 
 function git_commit_show() {
@@ -314,20 +314,20 @@ function push() {
 
     command="curl -s --form-string \"token=${PUSHOVER_TOKEN}\" --form-string \"user=${PUSHOVER_USERKEY}\"  --form-string \"message=${MESSAGE}\""
 
-    if [ -z ${DEVICE+x} ]; then 
+    if [ -z ${DEVICE+x} ]; then
         echo "Message will be pushed to all devices";
-    else 
+    else
         command+=" --form-string \"device=${DEVICE}\"";
     fi
 
-    if [ -z ${ATTACHMENT+x} ]; then 
-        ; 
-    else 
+    if [ -z ${ATTACHMENT+x} ]; then
+        ;
+    else
         command+=" -F \"attachment=@${ATTACHMENT}\"";
     fi
 
     command+=" https://api.pushover.net/1/messages.json"
-  
+
     eval $command
 }
 
@@ -348,7 +348,7 @@ function blog_new() {
 }
 
 function hexo_preview() {
-  open http://127.0.0.1:4000  
+  open http://127.0.0.1:4000
   hexo server
 }
 
